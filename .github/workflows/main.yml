@@ -177,7 +177,9 @@ jobs:
       - name: Archive frontend build
         run: |
           cd front
-          tar -czf ../frontend-build.tar.gz .next public package.json .env.production
+          FILES=".next package.json .env.production"
+          if [ -d "public" ]; then FILES="$FILES public"; fi
+          tar -czf ../frontend-build.tar.gz $FILES
 
       - name: Copy frontend archive to EC2
         uses: appleboy/scp-action@v0.1.7
