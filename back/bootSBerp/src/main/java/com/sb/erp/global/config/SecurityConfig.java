@@ -125,8 +125,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
  
-        configuration.setAllowedOrigins(List.of("http://localhost:3000","https://cdy-sberp.duckdns.org
-"));  //★ Front 포트번호
+        configuration.setAllowedOrigins(List.of("http://localhost:3000","https://cdy-sberp.duckdns.org"));  //★ Front 포트번호
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
