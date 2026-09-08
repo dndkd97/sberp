@@ -1,0 +1,104 @@
+# ============================
+# Maven
+# ============================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+*.ear
+
+# ============================
+# Java
+# ============================
+*.class
+*.log
+hs_err_pid*
+
+# ============================
+# Spring / STS
+# ============================
+.springBeans
+.sts4-cache/
+
+# ============================
+# Eclipse / STS
+# ============================
+.classpath
+.project
+.settings/
+.factorypath
+eclipse/
+bin/
+build/
+
+# ============================
+# VS Code
+# ============================
+.vscode/
+.metadata/
+
+# ============================
+# IntelliJ IDEA
+# ============================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ============================
+# OS
+# ============================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================
+# Tomcat
+# ============================
+work/
+logs/
+
+# ============================
+# DB / 환경설정 (보안)
+# ============================
+# src/main/resources/application.properties
+# src/main/resources/application.yml
+# src/main/resources/db.properties
+# src/main/resources/*-secret*
+# src/main/resources/*-local*
+
+#
+/Servers/
+
+
+# ============================
+# OS / 에디터 파일
+# ============================
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ============================
+# 컴파일 산출물
+# ============================
+*.class
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+
+
+# ============================
+# 로그 파일
+# ============================
+*.log
+logs/
+
