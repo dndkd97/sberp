@@ -1,4 +1,4 @@
-﻿package com.sb.erp.perm.entity;
+package com.sb.erp.perm.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

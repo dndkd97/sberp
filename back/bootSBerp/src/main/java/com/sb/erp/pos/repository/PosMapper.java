@@ -1,4 +1,4 @@
-﻿package com.sb.erp.pos.repository;
+package com.sb.erp.pos.repository;
 
 import java.util.List;
 

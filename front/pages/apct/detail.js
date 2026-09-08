@@ -24,7 +24,7 @@ import {
 } from "../../reducers/apct/applicantReducer";
 import { fetchAdminResumeRequest } from "../../reducers/rsm/resumeReducer";
 
-const API_ORIGIN = "http://localhost:8080";
+const API_ORIGIN = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
 export default function ApplicantDetailPage() {
   const router = useRouter();
   const dispatch = useDispatch();

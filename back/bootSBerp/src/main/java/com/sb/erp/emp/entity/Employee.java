@@ -1,4 +1,4 @@
-﻿package com.sb.erp.emp.entity;
+package com.sb.erp.emp.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

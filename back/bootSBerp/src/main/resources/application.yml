@@ -35,7 +35,7 @@ spring:
     # ddl-auto: update는 로컬/개발 편의용 기본값. 운영 배포 시에는 반드시
     # application-prod.yml에서 validate(또는 none)로 덮어써서 스키마 자동 변경을 막는다.
     hibernate:
-      ddl-auto: update # test 환경 create-drop 매번 초기화 / update 부분 수정
+      ddl-auto: validate # test 환경 create-drop 매번 초기화 / update 부분 수정
     properties:
       hibernate:
         format_sql: true
@@ -90,14 +90,14 @@ jwt:
 # 프론트엔드 기본 URL - 비밀번호 재설정 메일의 링크 생성에 사용
 app:
   front:
-    url: ${FRONT_URL:http://localhost:3000}
+    url: ${FRONT_URL:http://54.197.10.77}
 
 #file:
 #  upload-dir: uploads
 upload:
   path: /upload # 웹에서 접근할 URL prefix (fileUrl = /upload/**/**/파일명)
 resource:
-  path: C:/upload # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
+  path: /home/ubuntu/upload # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
 
 #server:
 #  port: 8484s

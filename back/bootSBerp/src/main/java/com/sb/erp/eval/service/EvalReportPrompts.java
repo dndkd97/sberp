@@ -1,4 +1,4 @@
-﻿package com.sb.erp.eval.service;
+package com.sb.erp.eval.service;
 
 /*
 EvalReport용 GPT 프롬프트 템플릿 모음.

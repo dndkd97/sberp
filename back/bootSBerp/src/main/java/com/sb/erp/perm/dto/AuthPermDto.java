@@ -1,4 +1,4 @@
-﻿package com.sb.erp.perm.dto;
+package com.sb.erp.perm.dto;
 
 import lombok.Data;
 

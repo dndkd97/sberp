@@ -1,4 +1,4 @@
-﻿package com.sb.erp.pos.entity;
+package com.sb.erp.pos.entity;
 
 import jakarta.persistence.*;
 import com.sb.erp.com.entity.Company;
