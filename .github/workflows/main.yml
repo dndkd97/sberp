@@ -153,7 +153,7 @@ jobs:
 
       - name: Create Frontend .env.production
         run: |
-          echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" > front/.env.production
+           echo "NEXT_PUBLIC_API_BASE_URL=https://cdy-sberp.duckdns.org" > front/.env.production
 
       - name: Build Frontend
         run: |
