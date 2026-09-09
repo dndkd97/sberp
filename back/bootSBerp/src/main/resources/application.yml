@@ -98,9 +98,9 @@ app:
 #file:
 #  upload-dir: uploads
 upload:
-  path: /home/ubuntu/app/back/build/libs/uploads # 웹에서 접근할 URL prefix (fileUrl = /upload/**/**/파일명)
+  path: /home/ubuntu/sberp/back/bootSBerp/build/libs/uploads # 웹에서 접근할 URL prefix (fileUrl = /upload/**/**/파일명)
 resource:
-  path: /home/ubuntu/app/back/build/libs/uploads # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
+  path: /home/ubuntu/sberp/back/bootSBerp/build/libs/uploads # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
 
 #server:
 #  port: 8484s
