@@ -16,6 +16,9 @@ springdoc:
     persistAuthorization: true  # 페이지 새로고침 후에도 Authorization 헤더 유지 여부
     defaultModelsExpandDepth: -1  # 모델 스키마의 기본 펼침 깊이 (-1이면 모델 펼쳐지지 않음)
 
+server:
+  forward-headers-strategy: framework
+  
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XEPDB1
