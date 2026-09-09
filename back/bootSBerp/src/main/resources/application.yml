@@ -18,7 +18,7 @@ springdoc:
 
 server:
   forward-headers-strategy: framework
-  
+
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521/XEPDB1
@@ -98,9 +98,9 @@ app:
 #file:
 #  upload-dir: uploads
 upload:
-  path: /upload # 웹에서 접근할 URL prefix (fileUrl = /upload/**/**/파일명)
+  path: /home/ubuntu/app/back/build/libs/uploads # 웹에서 접근할 URL prefix (fileUrl = /upload/**/**/파일명)
 resource:
-  path: /home/ubuntu/upload # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
+  path: /home/ubuntu/app/back/build/libs/uploads # 실제 디스크 저장 경로 (운영 서버에서는 리눅스 절대경로로 교체)
 
 #server:
 #  port: 8484s
