@@ -30,7 +30,7 @@ public class StatisticsSyncService {
     public void sendApplicantStatisticsToDjango(Long comId) {
 
         String djangoUrl =
-                "http://localhost:8000/dashboard/api/statistics/";
+        "https://cdy-sberp.duckdns.org/dashboard/api/statistics/";
 
         List<Object[]> results =
                 applicantRepository.countByStatusGrouped(comId);
@@ -91,7 +91,7 @@ public class StatisticsSyncService {
         payload.put("monthlyCounts", monthlyCounts);
 
         String djangoUrl =
-                "http://localhost:8000/dashboard/api/analysis/";
+        "https://cdy-sberp.duckdns.org/dashboard/api/analysis/";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
