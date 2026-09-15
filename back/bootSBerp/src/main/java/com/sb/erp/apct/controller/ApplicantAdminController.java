@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sb.erp.apct.dto.response.ApplicantResponse;
 import com.sb.erp.apct.dto.response.ApplicantStatusCountResponse;
 import com.sb.erp.apct.service.ApplicantService;
+import com.sb.erp.apct.service.StatisticsSyncService;
 import com.sb.erp.global.oauth2.CustomUserPrincipal;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class ApplicantAdminController {
 
     private final ApplicantService applicantService;
+    private final StatisticsSyncService statisticsSyncService;
 
     // 지원자 목록 — 같은 회사만 조회. ROOT는 전체 조회
     @Operation(summary = "지원자 목록")
@@ -88,6 +91,31 @@ public class ApplicantAdminController {
     public ResponseEntity<List<ApplicantStatusCountResponse>> getDashboard(
             @AuthenticationPrincipal CustomUserPrincipal principal) {
         return ResponseEntity.ok(applicantService.getDashboardStats(principal.getComId()));
+    }
+    
+    // pyhon+django 심화분석
+    @PostMapping("/statistics/sync")
+    public ResponseEntity<String> syncStatistics(
+            @AuthenticationPrincipal CustomUserPrincipal principal) {
+
+        statisticsSyncService.sendApplicantStatisticsToDjango(
+                principal.getComId()
+        );
+
+        return ResponseEntity.ok("통계 동기화 성공");
+    }
+    
+    // Django + Pandas 심화분석
+    @GetMapping("/analysis")
+    public ResponseEntity<Map<String, Object>> getAnalysis(
+            @AuthenticationPrincipal CustomUserPrincipal principal) {
+
+        return ResponseEntity.ok(
+                statisticsSyncService
+                        .getApplicantAnalysisFromDjango(
+                                principal.getComId()
+                        )
+        );
     }
 
     // 공고별 fit_score 순위

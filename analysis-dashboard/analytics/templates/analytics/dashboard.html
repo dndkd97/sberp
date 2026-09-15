@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>채용 데이터 분석</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #1f2937;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                "Noto Sans KR",
+                sans-serif;
+        }
+
+        .dashboard {
+            width: min(1180px, calc(100% - 48px));
+            margin: 40px auto 60px;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #8a93a3;
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 750;
+            letter-spacing: -0.8px;
+        }
+
+        .page-header p {
+            margin: 8px 0 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* KPI */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .summary-value {
+            font-size: 27px;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+        .summary-detail {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .accent-blue {
+            color: #2563eb;
+        }
+
+        .accent-orange {
+            color: #d97706;
+        }
+
+        .accent-red {
+            color: #dc2626;
+        }
+
+        /* SECTION */
+
+        .section {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 18px;
+        }
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .section-description {
+            margin: 6px 0 0;
+            color: #8a93a3;
+            font-size: 13px;
+        }
+
+        /* FUNNEL */
+
+        .funnel {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .funnel-step {
+            flex: 1;
+            text-align: center;
+        }
+
+        .funnel-box {
+            padding: 20px 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fafbfc;
+        }
+
+        .funnel-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .funnel-count {
+            font-size: 26px;
+            font-weight: 750;
+        }
+
+        .funnel-unit {
+            font-size: 13px;
+            color: #6b7280;
+            margin-left: 2px;
+        }
+
+        .conversion {
+            min-width: 58px;
+            text-align: center;
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .conversion::before {
+            content: "→";
+            display: block;
+            font-size: 20px;
+            color: #b8c0cc;
+            margin-bottom: 2px;
+        }
+
+        /* DROP ANALYSIS */
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+        }
+
+        .drop-box {
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #edf0f4;
+        }
+
+        .drop-title {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .drop-stage {
+            font-size: 20px;
+            font-weight: 750;
+            margin-bottom: 14px;
+        }
+
+        .drop-number {
+            font-size: 28px;
+            font-weight: 750;
+            color: #dc2626;
+        }
+
+        .drop-rate {
+            margin-left: 7px;
+            color: #dc2626;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .drop-description {
+            margin-top: 8px;
+            color: #8a93a3;
+            font-size: 12px;
+        }
+
+        /* CHART */
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .funnel {
+                flex-direction: column;
+            }
+
+            .funnel-step {
+                width: 100%;
+            }
+
+            .conversion {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+
+    <header class="page-header">
+
+        <div class="breadcrumb">
+            지원자 관리 / 데이터 분석
+        </div>
+
+        <h1>
+            채용 데이터 분석
+        </h1>
+
+        <p>
+            지원자 현황을 넘어 전형 흐름과 이탈 구간을 분석합니다.
+        </p>
+
+    </header>
+
+
+    <!-- KPI -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                전체 지원자
+            </div>
+
+            <div class="summary-value accent-blue">
+                {{ total_count }}명
+            </div>
+
+            <div class="summary-detail">
+                현재 집계 기준
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                평균 전환율
+            </div>
+
+            <div class="summary-value accent-orange">
+                 {{ average_conversion }}%
+            </div>
+
+            <div class="summary-detail">
+                단계별 전환 데이터
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                최대 이탈 구간
+            </div>
+
+            <div class="summary-value accent-red">
+                {{ max_drop_stage }}
+            </div>
+
+            <div class="summary-detail">
+                단계별 지원자 감소 분석
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FUNNEL -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                전형 단계별 흐름
+            </h2>
+
+            <p class="section-description">
+                지원자가 각 채용 단계에서 어떻게 이동하는지 확인합니다.
+            </p>
+
+        </div>
+
+
+        <div class="funnel">
+
+            {% for label in labels %}
+
+            <div class="funnel-step">
+
+                <div class="funnel-box">
+
+                    <div class="funnel-label">
+                        {{ label }}
+                    </div>
+
+                    <span class="funnel-count">
+                        {{ values|slice:forloop.counter0|last }}
+                    </span>
+
+                    <span class="funnel-unit">
+                        명
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% if not forloop.last %}
+
+            <div class="conversion">
+                전환
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- DROP ANALYSIS -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                이탈 구간 분석
+            </h2>
+
+            <p class="section-description">
+                전형 단계 사이에서 지원자가 가장 많이 감소하는 구간을 분석합니다.
+            </p>
+
+        </div>
+
+
+        <div class="analysis-grid">
+
+            <div class="drop-box">
+
+                <div class="drop-title">
+                    가장 큰 이탈 구간
+                </div>
+
+                <div class="drop-stage">
+                    {{ max_drop_stage }}
+                </div>
+
+                <div>
+                    <span class="drop-number">
+                        {{ max_drop_count }}명
+                    </span>
+
+                    <span class="drop-rate">
+                        {{ max_drop_rate }}% 이탈
+                    </span>
+                </div>
+
+                <div class="drop-description">
+                    단계 간 지원자 수 차이를 Pandas로 분석한 결과입니다.
+                </div>
+
+            </div>
+
+
+            <div class="drop-box">
+
+                <div class="drop-title">
+                    현재 가장 많은 지원자가 위치한 단계
+                </div>
+
+                <div class="drop-stage">
+                    {{ top_status }}
+                </div>
+
+                <div>
+                    <span class="drop-number" style="color:#2563eb;">
+                        {{ total_count }}
+                    </span>
+
+                    <span class="drop-rate" style="color:#6b7280;">
+                        전체 기준
+                    </span>
+                </div>
+
+                <div class="drop-description">
+                    실제 단계별 인원은 아래 차트에서 확인할 수 있습니다.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CHART -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                단계별 지원자 분포
+            </h2>
+
+            <p class="section-description">
+                전형 단계별 지원자 수를 비교합니다.
+            </p>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <canvas id="analysisChart"></canvas>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+{{ labels|json_script:"labels-data" }}
+{{ values|json_script:"values-data" }}
+
+
+<script>
+
+const labels = JSON.parse(
+    document.getElementById("labels-data").textContent
+);
+
+const values = JSON.parse(
+    document.getElementById("values-data").textContent
+);
+
+
+new Chart(
+    document.getElementById("analysisChart"),
+    {
+
+        type: "bar",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [
+
+                {
+                    label: "지원자 수",
+
+                    data: values,
+
+                    backgroundColor: [
+                        "#8a93a3",
+                        "#2563eb",
+                        "#d97706",
+                        "#16a34a",
+                        "#dc2626"
+                    ],
+
+                    borderRadius: 6,
+
+                    maxBarThickness: 55
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    display: false
+                }
+
+            },
+
+            scales: {
+
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+                        precision: 0
+                    },
+
+                    grid: {
+                        color: "#eef0f4"
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

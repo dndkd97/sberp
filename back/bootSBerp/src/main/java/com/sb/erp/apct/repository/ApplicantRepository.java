@@ -35,6 +35,23 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Long>,
     nativeQuery = true )
     List<Object[]> countByStatusGrouped(@Param("comId") Long comId);
     
+	 // 분석 대시보드용 월별 지원자 수
+    @Query(
+        value = """
+            SELECT
+                TO_CHAR(APCT_DATE, 'YYYY-MM') AS MONTH,
+                COUNT(*) AS COUNT
+            FROM APPLICANT
+            WHERE COM_ID = :comId
+            GROUP BY TO_CHAR(APCT_DATE, 'YYYY-MM')
+            ORDER BY MONTH
+            """,
+        nativeQuery = true
+    )
+    List<Object[]> countByMonthGrouped(
+            @Param("comId") Long comId
+    );
+    
     // 공고별 지원자 fit_score 순위 (적합도 높은 순, NULL은 맨 뒤로)
     @Query("""
         SELECT new com.sb.erp.apct.dto.response.ApplicantResponse(
