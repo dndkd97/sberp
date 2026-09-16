@@ -12,6 +12,17 @@ SBerp v3 채용관리 모듈 배포 이후, 통계 인사이트 요구에 대응
 | 기술 스택 | Python, Django, Pandas |
 | 연동 대상 | 기존 Spring Boot 백엔드(RestTemplate) |
 
+## 🛠 기술 스택
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+
+> 분석 로직은 Python(Pandas)으로, 기존 Spring Boot 백엔드와는 REST API로 연동. 동일 EC2 인스턴스에 별도 프로세스로 배포하고 Nginx로 경로별 라우팅, GitHub Actions로 배포 자동화.
+
 ## 🚀 AWS 배포
 
 - 기존 Spring Boot 백엔드는 그대로, 채용 데이터 분석 서버(Django)를 동일 EC2 인스턴스에 별도 프로세스(8000번 포트)로 추가 배포
