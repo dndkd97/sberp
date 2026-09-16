@@ -1,7 +1,7 @@
 # 채용 데이터 분석 서버 구축 & AWS 배포 (Django + Pandas)
 
 SBerp v3 채용관리 모듈 배포 이후, 통계 인사이트 요구에 대응하기 위해 혼자 추가로 구축한 채용 데이터 분석 서버와 그 배포 작업을 정리한 문서입니다. 프로젝트/태스크/채용관리 등 그 외 도메인 기능은 SBerp v3 README를 참고해 주세요.
-> 팀 전체 코드→ https://github.com/yoonguri988/spring-breeze-erp
+> 팀 전체 코드→ https://github.com/yoonguri988/spring-breeze-erp  
 v3 (REST API + AI): https://github.com/dndkd97/SB_ERP_V3
 
 ## 📌 개요
